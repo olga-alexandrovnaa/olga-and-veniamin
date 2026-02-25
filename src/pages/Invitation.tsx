@@ -104,13 +104,11 @@ export default function Invitation() {
           <div className="chapter-hero__content">
             <div className="chapter-hero__green">
               <p className="hero-small-caps">Вместе и навсегда</p>
-              <br/>              
-              <br/>
+              <br/>  
               <br/>
               <h1 className="hero-names font-script">Вениамин</h1>
               <h1 className="hero-names font-script">и</h1>
               <h1 className="hero-names font-script">Ольга</h1>
-              <br/>
               <br/>
               <br/>
               <p className="hero-small-caps">Приглашаем&nbsp;вас на&nbsp;нашу&nbsp;свадьбу</p>
