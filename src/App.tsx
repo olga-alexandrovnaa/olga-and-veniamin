@@ -5,7 +5,7 @@ import './App.css';
 
 function App() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+    <BrowserRouter basename={import.meta.env.VITE_APP_BASE ?? (import.meta.env.BASE_URL?.replace(/\/$/, '') || '')}>
       <Routes>
         <Route path="/papers" element={<PapersPage />} />
         <Route path="/" element={<Invitation />} />

@@ -37,7 +37,9 @@ export default function PapersPage() {
     return () => clearTimeout(timer);
   }, [guests.length]);
 
-  const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+  const baseUrl = typeof window !== 'undefined'
+    ? `${window.location.origin}${import.meta.env.VITE_APP_BASE || ''}`
+    : '';
 
   if (loading) {
     return (
