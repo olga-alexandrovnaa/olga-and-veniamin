@@ -161,7 +161,7 @@ export default function Invitation() {
               <h3>Дресс-код</h3>
               <p>{INVITATION.dressCode}</p>
               <div className="dressCode" aria-hidden="true">
-                <img src="/4.JPG" alt="" />
+                <img src={`${import.meta.env.BASE_URL}4.JPG`} alt="" />
               </div>
             </div>
             {INVITATION.blocks.map((b) => (

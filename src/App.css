@@ -68,7 +68,7 @@
   right: 0;
   bottom: 0;
   width: 50%;
-  background: url('/3.png') left center / cover no-repeat;
+  background: url('../3.png') left center / cover no-repeat;
   pointer-events: none;
 }
 @media (max-width: 600px) {
@@ -149,7 +149,7 @@
   width: 100%;
   box-sizing: border-box;
   background-color: rgba(255, 255, 255, 0.623);
-  background-image: linear-gradient( rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.507), rgba(255, 255, 255, 0.92)), url('/2.jpg');
+  background-image: linear-gradient( rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.507), rgba(255, 255, 255, 0.92)), url('../2.jpg');
   background-repeat: no-repeat;
   background-position: center top;
   background-size: 100vw auto;
@@ -295,7 +295,7 @@
   width: 100%;
   box-sizing: border-box;
   background-color: rgba(74, 122, 70, 0.92);
-  background-image: linear-gradient(rgba(74, 122, 70, 0.88), rgba(74, 122, 70, 0.92)), url('/2.jpg');
+  background-image: linear-gradient(rgba(74, 122, 70, 0.88), rgba(74, 122, 70, 0.92)), url('../2.jpg');
   background-repeat: no-repeat;
   background-position: center top;
   background-size: 100vw auto;
@@ -496,7 +496,7 @@
   right: 0;
   bottom: 0;
   width: 50%;
-  background: url('/3.png') left center / cover no-repeat;
+  background: url('../3.png') left center / cover no-repeat;
 }
 
 .paper-hero__qr-strip {
