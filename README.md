@@ -24,17 +24,22 @@ npm run dev
 
 ## GitHub Pages
 
-Проект настроен для публикации на GitHub Pages. После пуша в ветку `main`:
+### Важно: источник деплоя
 
-1. В репозитории откройте **Settings** → **Pages**.
-2. В разделе **Build and deployment** выберите **Source: GitHub Actions**.
-3. После первого пуша дождитесь завершения workflow **Deploy to GitHub Pages** (вкладка **Actions**).
+Сайт должен публиковаться **только через GitHub Actions** (собранная папка `dist/`).  
+Если в **Settings → Pages** выбран **Source: Deploy from a branch**, браузер будет получать исходный код и запрашивать `/src/main.tsx` → **404**. Нужна именно сборка, а не исходники.
 
-Сайт будет доступен по адресу: **https://olga-alexandrovnaa.github.io/olga-and-veniamin/**  
-Ссылки для гостей: `https://olga-alexandrovnaa.github.io/olga-and-veniamin/КОД`.  
-Печать приглашений: `https://olga-alexandrovnaa.github.io/olga-and-veniamin/papers`.
+### Что сделать
 
-**Если сайт не открывается (белый экран):** имя репозитория на GitHub должно быть **olga-and-veniamin**. Если репозиторий называется иначе (например, wedd), в файле `.env.production` укажите `VITE_APP_BASE=имя-репозитория` (без слэшей), закоммитьте и заново задеплойте.
+1. Репозиторий: **Settings** → **Pages**.
+2. В блоке **Build and deployment** в поле **Source** выберите **GitHub Actions** (не «Deploy from a branch»).
+3. Сделайте пуш в ветку `main` и дождитесь зелёного завершения workflow **Deploy to GitHub Pages** (вкладка **Actions**).
+4. Открывайте сайт **по полному адресу с именем репозитория** (не корень `github.io`):
+   - Главная: **https://olga-alexandrovnaa.github.io/olga-and-veniamin/**
+   - Гость по коду: **https://olga-alexandrovnaa.github.io/olga-and-veniamin/КОД**
+   - Печать: **https://olga-alexandrovnaa.github.io/olga-and-veniamin/papers**
+
+**Ошибка 404 на `/src/main.tsx`** — значит, в Pages всё ещё выбран деплой из ветки. Переключите на **GitHub Actions** и при необходимости заново запустите workflow (повторный пуш в `main` или кнопка «Re-run» в последнем запуске).
 
 ## Настройка таблицы Google
 
