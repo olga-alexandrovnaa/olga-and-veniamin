@@ -22,6 +22,18 @@ npm run dev
 
 Сборка: `npm run build`. Превью: `npm run preview`.
 
+## GitHub Pages
+
+Проект настроен для публикации на GitHub Pages. После пуша в ветку `main`:
+
+1. В репозитории откройте **Settings** → **Pages**.
+2. В разделе **Build and deployment** выберите **Source: GitHub Actions**.
+3. После первого пуша дождитесь завершения workflow **Deploy to GitHub Pages** (вкладка **Actions**).
+
+Сайт будет доступен по адресу: **https://olga-alexandrovnaa.github.io/olga-and-veniamin/**  
+Ссылки для гостей: `https://olga-alexandrovnaa.github.io/olga-and-veniamin/КОД` (например `/olga-and-veniamin/123123`).  
+Печать приглашений: `https://olga-alexandrovnaa.github.io/olga-and-veniamin/papers`.
+
 ## Настройка таблицы Google
 
 ### Шаг 1. Заголовки и колонки
