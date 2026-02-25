@@ -31,8 +31,10 @@ npm run dev
 3. После первого пуша дождитесь завершения workflow **Deploy to GitHub Pages** (вкладка **Actions**).
 
 Сайт будет доступен по адресу: **https://olga-alexandrovnaa.github.io/olga-and-veniamin/**  
-Ссылки для гостей: `https://olga-alexandrovnaa.github.io/olga-and-veniamin/КОД` (например `/olga-and-veniamin/123123`).  
+Ссылки для гостей: `https://olga-alexandrovnaa.github.io/olga-and-veniamin/КОД`.  
 Печать приглашений: `https://olga-alexandrovnaa.github.io/olga-and-veniamin/papers`.
+
+**Если сайт не открывается (белый экран):** имя репозитория на GitHub должно быть **olga-and-veniamin**. Если репозиторий называется иначе (например, wedd), в файле `.env.production` укажите `VITE_APP_BASE=имя-репозитория` (без слэшей), закоммитьте и заново задеплойте.
 
 ## Настройка таблицы Google
 
