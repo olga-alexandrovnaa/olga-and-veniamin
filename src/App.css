@@ -1,0 +1,593 @@
+/* Full-height sections */
+.section {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* Chapter 1: зелёный блок 2/3 слева, рисунок по правому краю экрана, countdown strip */
+.chapter-hero {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  height: 100vh;
+}
+
+.chapter-hero__wrap {
+  flex: 1;
+  position: relative;
+  height: 100vh;
+  display: flex;
+}
+
+.chapter-hero__content {
+  width: 100%;
+  flex-shrink: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+}
+
+.chapter-hero__green {
+  flex: 1;
+  background: var(--green-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+  padding: 3rem 5rem 3rem 5rem;
+  /* text-align: center; */
+  width: 66.666%;
+  height: 100vh;
+  position: absolute;
+}
+
+@media (max-width: 600px) {
+  .chapter-hero__green {
+    padding: 3rem 5rem 3rem 2rem;
+  }
+}
+
+.chapter-hero__flowers {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  background: url('/3.png') left center / cover no-repeat;
+  pointer-events: none;
+}
+@media (max-width: 600px) {
+  .chapter-hero__flowers {
+    width: 58%;
+    height: 80%;
+    margin-top: 20%;
+
+  }
+}
+
+/* Первая глава: тексты */
+.hero-small-caps {
+  font-variant: small-caps;
+  font-size: 1.2rem;
+  letter-spacing: 0.12em;
+  color: var(--white);
+  opacity: 0.95;
+  margin-bottom: 0.35rem;
+  width: 100px;
+}
+
+.hero-names {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 600;
+  color: var(--white);
+  margin: 0 0 0.5rem;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.hero-small-caps.hero-time {
+  margin-bottom: 0.75rem;
+}
+
+.hero-line {
+  width: 148px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.7);
+  margin: 0.75rem 0;
+  border-radius: 1px;
+}
+
+.hero-date {
+  font-size: 1.5rem;
+  color: var(--white);
+  margin: 0;
+}
+
+/* Обратный отсчёт: полупрозрачная полоса на всю ширину, текст слева */
+.chapter-hero__countdown-strip {
+  background: rgba(0, 0, 0, 0.116);
+  padding: 1rem 2rem;
+  padding-right: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: absolute;
+  bottom: 0;
+}
+
+.chapter-hero__countdown-strip .countdown {
+  margin: 0;
+  color: var(--white);
+  text-align: left;
+}
+
+.chapter-hero__countdown-strip .countdown__grid,
+.chapter-hero__countdown-strip .countdown__labels {
+  justify-content: flex-start;
+  span {
+    width: 60px;
+  }
+}
+
+/* Chapter 2 & 3: фон 2.jpg — по ширине экрана (100vw), не обрезается */
+.chapter-light {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.623);
+  background-image: linear-gradient( rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.507), rgba(255, 255, 255, 0.92)), url('/2.jpg');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 100vw auto;
+  background-attachment: local;
+}
+
+.chapter-light .section__inner {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.chapter-light h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: var(--green-dark);
+  margin-bottom: 1rem;
+}
+
+.chapter-light p {
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  line-height: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.margin{
+  margin-top: 3rem;
+} 
+
+.list {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  text-align: justify;
+  list-style: none
+}
+
+/* Chapter 3 blocks */
+.info-blocks {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 680px;
+  margin: 2rem auto 0;
+  text-align: left;
+}
+
+.info-block {
+  background: rgba(255, 255, 255, 0.575);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.info-block h3 {
+  /* font-size: 1.1rem; */
+  color: var(--green-dark);
+  /* margin-bottom: 0.5rem; */
+  font-variant: small-caps;
+  font-size: 1.2rem;
+  letter-spacing: 0.12em;
+  /* color: var(--white); */
+  opacity: 0.95;
+  margin-bottom: 0.35rem;
+}
+
+.info-block p {
+  margin-bottom: 0;
+  font-size: 0.95rem;
+}
+
+.dressCode {
+  width: 100%;
+  margin-top: 1rem;
+  overflow: hidden;
+}
+
+.dressCode img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.85rem 2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.confirm-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.confirm-message-input {
+  width: 100%;
+  min-height: 56px;
+  padding: 0.75rem 1rem;
+  border: 2px solid rgba(90, 138, 85, 0.5);
+  border-radius: 8px;
+  font-size: 1rem;
+  color: var(--text-dark);
+  box-sizing: border-box;
+}
+
+.confirm-message-input::placeholder {
+  color: var(--text-muted);
+}
+
+.confirm-row .btn--primary {
+  width: 100%;
+  padding: 1rem;
+}
+
+.btn--primary {
+  background: var(--green-dark);
+  color: var(--white);
+  margin-top: 0;
+}
+
+.btn--light {
+  background: var(--white);
+  color: var(--green-dark);
+  border: 2px solid var(--green-dark);
+  margin-top: 1rem;
+}
+
+/* Chapter 4: фон 2.jpg — по ширине экрана (100vw), не обрезается */
+.chapter-survey {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: rgba(74, 122, 70, 0.92);
+  background-image: linear-gradient(rgba(74, 122, 70, 0.88), rgba(74, 122, 70, 0.92)), url('/2.jpg');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 100vw auto;
+  color: var(--white);
+}
+
+.chapter-survey h2 {
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+
+.chapter-survey .section__inner {
+  max-width: 520px;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--white);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.form-group select option {
+  background: var(--green-bg-dark);
+  color: var(--white);
+}
+
+.form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.chapter-survey .btn--light {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 1rem;
+}
+
+.survey-done {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.survey-error {
+  color: #ffb3b3;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Countdown */
+.countdown__grid {
+  display: flex;
+  gap: clamp(0.5rem, 2vw, 1.5rem);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.countdown__value {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+}
+
+.countdown__labels {
+  display: flex;
+  gap: clamp(0.5rem, 2vw, 1.5rem);
+  justify-content: center;
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+.countdown__labels span {
+  text-align: center;
+}
+
+/* Loading & error */
+.guest-loading,
+.guest-error {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+  background: var(--green-soft);
+  color: var(--white);
+}
+
+.guest-error {
+  background: var(--green-dark);
+}
+
+.guest-error p {
+  margin-top: 1rem;
+  opacity: 0.9;
+}
+
+/* ========== Печать приглашений /papers ========== */
+.papers-loading,
+.papers-error {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  background: var(--green-soft);
+  color: var(--white);
+}
+
+.papers-error {
+  background: var(--green-dark);
+}
+
+.papers-screen-only {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem 2rem;
+  background: var(--green-dark);
+  color: var(--white);
+  text-align: center;
+  z-index: 9999;
+}
+
+.papers-print-area {
+  padding-top: 4rem;
+}
+
+.papers-guest-pages {
+  break-inside: avoid;
+}
+
+.paper-page {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  page-break-after: always;
+  box-sizing: border-box;
+}
+
+.papers-guest-pages:last-child .paper-page:last-child {
+  page-break-after: auto;
+}
+
+/* Страница 1: герой (зелёный + цветок + QR) */
+.paper-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  overflow: hidden;
+}
+
+.paper-hero__green {
+  width: 66.666%;
+  background: var(--green-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+  padding: 3rem 10rem 0rem 15rem;
+  /* text-align: center; */
+}
+
+.paper-hero .hero-line {
+}
+
+.paper-hero__flowers {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  background: url('/3.png') left center / cover no-repeat;
+}
+
+.paper-hero__qr-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.12);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.paper-hero__qr-strip2 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.paper-qr-img {
+  display: block;
+  flex-shrink: 0;
+}
+
+.paper-qr-label {
+  color: var(--white);
+  font-size: 1.1rem;
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+  align-self: flex-end;
+}
+
+.paper-details .section__inner {
+  max-width: 720px;
+}
+
+/* Печать: альбомная ориентация, разрывы страниц */
+@media print {
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .papers-screen-only {
+    display: none !important;
+  }
+
+  .papers-print-area {
+    padding-top: 0;
+  }
+
+  .paper-page {
+    min-height: 0;
+    height: auto;
+    page-break-after: always;
+  }
+
+  .paper-page--hero {
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .paper-hero {
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .paper-page--details {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+  }
+}
