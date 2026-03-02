@@ -40,14 +40,19 @@ export default function Invitation() {
   const [confirmed, setConfirmed] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState('');
+  const [slowLoad, setSlowLoad] = useState(false);
 
-  useEffect(() => {
+  const loadGuest = () => {
     const c = (code ?? '').trim();
     if (!c) {
       setError(true);
       setLoading(false);
       return;
     }
+    setLoading(true);
+    setError(false);
+    setSlowLoad(false);
+    const slowTimer = setTimeout(() => setSlowLoad(true), 5000);
     let cancelled = false;
     fetchGuestByCode(c)
       .then((data) => {
@@ -63,9 +68,16 @@ export default function Invitation() {
         if (!cancelled) setError(true);
       })
       .finally(() => {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) {
+          clearTimeout(slowTimer);
+          setLoading(false);
+        }
       });
     return () => { cancelled = true; };
+  };
+
+  useEffect(() => {
+    loadGuest();
   }, [code]);
 
   const handleConfirm = async () => {
@@ -83,6 +95,11 @@ export default function Invitation() {
     return (
       <div className="guest-loading">
         <p>Загрузка...</p>
+        {slowLoad && (
+          <p style={{ marginTop: '0.75rem', fontSize: '0.9rem', opacity: 0.9 }}>
+            Дольше обычного — таблица может отвечать с задержкой. Подождите или обновите страницу.
+          </p>
+        )}
       </div>
     );
   }
@@ -92,6 +109,11 @@ export default function Invitation() {
       <div className="guest-error">
         <h2>Приглашение не найдено</h2>
         <p>Проверьте ссылку или обратитесь к организаторам.</p>
+        <p style={{ marginTop: '1rem' }}>
+          <button type="button" className="btn btn--light" onClick={loadGuest}>
+            Повторить попытку
+          </button>
+        </p>
       </div>
     );
   }

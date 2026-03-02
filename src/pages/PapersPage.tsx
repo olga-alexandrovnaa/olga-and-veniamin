@@ -9,8 +9,50 @@ const INVITATION = {
   time2: '14.00',
 };
 
-function getQrUrl(link: string): string {
-  return `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(link)}`;
+const QR_APIS = [
+  (link: string) => `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(link)}`,
+  (link: string) => `https://quickchart.io/qr?size=200&text=${encodeURIComponent(link)}`,
+];
+
+function getQrUrl(link: string, fallbackIndex = 0): string {
+  return QR_APIS[fallbackIndex]?.(link) ?? QR_APIS[0](link);
+}
+
+function PaperQr({ link, guestCode }: { link: string; guestCode: string }) {
+  const [failed, setFailed] = useState(false);
+  const [srcIndex, setSrcIndex] = useState(0);
+  const src = getQrUrl(link, srcIndex);
+
+  if (failed) {
+    return (
+      <div className="paper-qr-fallback">
+        <span className="paper-qr-label">Подробнее на сайте:</span>
+        <a href={link} target="_blank" rel="noopener noreferrer" className="paper-qr-link">
+          {link}
+        </a>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <img
+        src={src}
+        alt=""
+        width={120}
+        height={120}
+        className="paper-qr-img"
+        onError={() => {
+          if (srcIndex < QR_APIS.length - 1) {
+            setSrcIndex((i) => i + 1);
+          } else {
+            setFailed(true);
+          }
+        }}
+      />
+      <span className="paper-qr-label">Подробнее на сайте</span>
+    </>
+  );
 }
 
 export default function PapersPage() {
@@ -84,14 +126,7 @@ export default function PapersPage() {
                 </div>
                 <div className="paper-hero__flowers" aria-hidden="true" />
                 <div className="paper-hero__qr-strip2">
-                  <img
-                    src={getQrUrl(`${baseUrl}/${guest.code}`)}
-                    alt=""
-                    width={120}
-                    height={120}
-                    className="paper-qr-img"
-                  />
-                  <span className="paper-qr-label">Подробнее на сайте</span>
+                  <PaperQr link={`${baseUrl}/${guest.code}`} guestCode={guest.code} />
                 </div>
               </div>
             </div>

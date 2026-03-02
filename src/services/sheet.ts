@@ -16,23 +16,68 @@ export interface GuestData {
   confirmed: boolean;
 }
 
-/** Чтение данных гостя по коду из таблицы (без настройки переменных). */
-export async function fetchGuestByCode(code: string): Promise<GuestData | null> {
+const FETCH_ATTEMPTS = 3;
+const FETCH_RETRY_DELAY_MS = 1500;
+
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/** Несколько попыток: повтор при неуспешном результате (null / пустой массив). */
+async function withRetry<T>(
+  fn: () => Promise<T>,
+  isFailure: (result: T) => boolean
+): Promise<T> {
+  let last: T = await fn();
+  for (let attempt = 1; attempt < FETCH_ATTEMPTS && isFailure(last); attempt++) {
+    await delay(FETCH_RETRY_DELAY_MS);
+    last = await fn();
+  }
+  return last;
+}
+
+/** Несколько попыток: повтор при ошибке (reject / throw). */
+async function withRetryOnError<T>(fn: () => Promise<T>): Promise<T> {
+  let lastError: unknown;
+  for (let attempt = 0; attempt < FETCH_ATTEMPTS; attempt++) {
+    try {
+      return await fn();
+    } catch (e) {
+      lastError = e;
+      if (attempt < FETCH_ATTEMPTS - 1) await delay(FETCH_RETRY_DELAY_MS);
+    }
+  }
+  throw lastError;
+}
+
+/** Нормализация кода для сравнения (trim + lowercase для UUID-подобных). */
+function normalizeCode(s: string): string {
+  return s.trim().toLowerCase();
+}
+
+/** Одна попытка загрузки гостя по коду. */
+async function fetchGuestByCodeOnce(code: string): Promise<GuestData | null> {
   const c = code.trim();
   if (!c) return null;
 
   const url = `https://opensheet.elk.sh/${SPREADSHEET_ID}/${encodeURIComponent(SHEET_NAME)}`;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 20000);
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeoutId);
     if (!res.ok) return null;
     const rows = (await res.json()) as Record<string, string>[];
     if (!Array.isArray(rows) || rows.length === 0) return null;
 
+    const codeNorm = normalizeCode(c);
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i];
-      const rowCode = (row['КОД'] ?? row['Код'] ?? '').toString().trim();
-      if (rowCode === c) {
-        const name = (row['ФИО'] ?? row['ФИО гостей'] ?? '').toString().trim();
+      const rowCodeRaw = (row['КОД'] ?? row['Код'] ?? row['код'] ?? row['CODE'] ?? '').toString();
+      const rowCode = rowCodeRaw.trim();
+      const match = rowCode === c || normalizeCode(rowCode) === codeNorm;
+      if (match) {
+        const name = (row['ФИО'] ?? row['ФИО гостей'] ?? row['фіо'] ?? '').toString().trim();
         if (name) {
           const confirmedCell = (row['Подтвердили'] ?? row['Подтвердили '] ?? '').toString().trim();
           const confirmed = /^да$/i.test(confirmedCell);
@@ -47,9 +92,18 @@ export async function fetchGuestByCode(code: string): Promise<GuestData | null> 
       }
     }
   } catch {
+    clearTimeout(timeoutId);
     return null;
   }
   return null;
+}
+
+/** Чтение данных гостя по коду из таблицы (до 3 попыток при сбое). */
+export async function fetchGuestByCode(code: string): Promise<GuestData | null> {
+  return withRetry(
+    () => fetchGuestByCodeOnce(code),
+    (result) => result === null
+  );
 }
 
 export interface GuestRow {
@@ -57,22 +111,27 @@ export interface GuestRow {
   code: string;
 }
 
-/** Все гости из таблицы (строки с заполненными ФИО и КОД). */
-export async function fetchAllGuests(): Promise<GuestRow[]> {
+/** Одна попытка загрузки всех гостей (при ошибке сети — throw). */
+async function fetchAllGuestsOnce(): Promise<GuestRow[]> {
   const url = `https://opensheet.elk.sh/${SPREADSHEET_ID}/${encodeURIComponent(SHEET_NAME)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const rows = (await res.json()) as Record<string, string>[];
+  if (!Array.isArray(rows)) return [];
+  const out: GuestRow[] = [];
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    const name = (row['ФИО'] ?? row['ФИО гостей'] ?? '').toString().trim();
+    const code = (row['КОД'] ?? row['Код'] ?? row['код'] ?? '').toString().trim();
+    if (name && code) out.push({ name, code });
+  }
+  return out;
+}
+
+/** Все гости из таблицы (до 3 попыток при ошибке сети). */
+export async function fetchAllGuests(): Promise<GuestRow[]> {
   try {
-    const res = await fetch(url);
-    if (!res.ok) return [];
-    const rows = (await res.json()) as Record<string, string>[];
-    if (!Array.isArray(rows) || rows.length === 0) return [];
-    const out: GuestRow[] = [];
-    for (let i = 0; i < rows.length; i++) {
-      const row = rows[i];
-      const name = (row['ФИО'] ?? row['ФИО гостей'] ?? '').toString().trim();
-      const code = (row['КОД'] ?? row['Код'] ?? '').toString().trim();
-      if (name && code) out.push({ name, code });
-    }
-    return out;
+    return await withRetryOnError(fetchAllGuestsOnce);
   } catch {
     return [];
   }
