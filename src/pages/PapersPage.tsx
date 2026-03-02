@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import QRCode from 'qrcode';
 import { fetchAllGuests, type GuestRow } from '../services/sheet';
 
 /** Тексты для печати — должны совпадать с Invitation */
@@ -9,24 +10,21 @@ const INVITATION = {
   time2: '14.00',
 };
 
-const QR_APIS = [
-  (link: string) => `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(link)}`,
-  (link: string) => `https://quickchart.io/qr?size=200&text=${encodeURIComponent(link)}`,
-];
-
-function getQrUrl(link: string, fallbackIndex = 0): string {
-  return QR_APIS[fallbackIndex]?.(link) ?? QR_APIS[0](link);
-}
-
 function PaperQr({ link, guestCode }: { link: string; guestCode: string }) {
+  const [dataUrl, setDataUrl] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
-  const [srcIndex, setSrcIndex] = useState(0);
-  const src = getQrUrl(link, srcIndex);
+
+  useEffect(() => {
+    QRCode.toDataURL(link, { width: 200, margin: 1 })
+      .then(setDataUrl)
+      .catch(() => setFailed(true));
+  }, [link]);
 
   if (failed) {
     return (
       <div className="paper-qr-fallback">
-        <span className="paper-qr-label">Подробнее на сайте:</span>
+        <span className="paper-qr-label">Подробнее на сайте</span>
+        {guestCode && <span className="paper-qr-code">Код приглашения: {guestCode}</span>}
         <a href={link} target="_blank" rel="noopener noreferrer" className="paper-qr-link">
           {link}
         </a>
@@ -34,21 +32,18 @@ function PaperQr({ link, guestCode }: { link: string; guestCode: string }) {
     );
   }
 
+  if (!dataUrl) {
+    return <span className="paper-qr-label">Подготовка QR…</span>;
+  }
+
   return (
     <>
       <img
-        src={src}
+        src={dataUrl}
         alt=""
         width={120}
         height={120}
         className="paper-qr-img"
-        onError={() => {
-          if (srcIndex < QR_APIS.length - 1) {
-            setSrcIndex((i) => i + 1);
-          } else {
-            setFailed(true);
-          }
-        }}
       />
       <span className="paper-qr-label">Подробнее на сайте</span>
     </>

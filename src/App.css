@@ -536,6 +536,11 @@
   word-break: break-all;
 }
 
+.paper-qr-code {
+  font-size: 0.8rem;
+  opacity: 0.95;
+}
+
 .paper-qr-link {
   color: var(--white);
   text-decoration: underline;
