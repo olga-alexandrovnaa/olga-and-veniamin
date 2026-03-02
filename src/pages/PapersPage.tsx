@@ -101,7 +101,7 @@ export default function PapersPage() {
               <section className="section chapter-light paper-details">
                 <div className="section__inner">
                   <h2 className="margin font-script">
-                    {guest.name.split(' ').length > 1 ? 'Дорогие гости,' : 'Дорогой гость'}
+                    {guest.name.split(' ').length > 1 ? 'Дорогие гости,' : 'Дорогой гость,'}
                   </h2>
                   <h2 className="font-script">{guest.name},</h2>
                   <p>

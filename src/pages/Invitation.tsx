@@ -127,7 +127,7 @@ export default function Invitation() {
       {/* Глава 2: дата, время, место, тайминг */}
       <section className="section chapter-light" aria-label="Детали">
         <div className="section__inner">
-          <h2 className="margin font-script">{guestName.split(' ').length > 1 ? 'Дорогие гости,' : 'Дорогой гость'}</h2>
+          <h2 className="margin font-script">{guestName.split(' ').length > 1 ? 'Дорогие гости,' : 'Дорогой гость,'}</h2>
           <h2 className="font-script">{guestName},</h2>
 
           <p>
