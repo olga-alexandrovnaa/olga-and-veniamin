@@ -52,6 +52,20 @@ export const SURVEY_QUESTIONS: SurveyQuestion[] = [
     options: ['Да', 'Нет'],
   },
   {
+    id: 'pair',
+    label: 'Имя вашей пары (при наличии)',
+    column: 9, // I — "Имя пары"
+    type: 'textarea',
+    placeholder: 'Ваш ответ...',
+  },
+  {
+    id: 'food',
+    label: 'Есть ли у вас ограничения по еде?',
+    column: 10, // J — "Ограничения по еде"
+    type: 'textarea',
+    placeholder: 'Ваш ответ...',
+  },
+  {
     id: 'alcohol',
     label: 'Предпочтения по алкоголю',
     column: 6, // F — "Предпочтения по алкоголю"
@@ -72,18 +86,6 @@ export const SURVEY_QUESTIONS: SurveyQuestion[] = [
     type: 'select',
     options: ['Да', 'Нет'],
   },
-  {
-    id: 'pair',
-    label: 'Имя вашей пары (при наличии)',
-    column: 9, // I — "Имя пары"
-    type: 'textarea',
-    placeholder: 'Ваш ответ...',
-  },
-  {
-    id: 'food',
-    label: 'Есть ли у вас ограничения по еде?',
-    column: 10, // J — "Ограничения по еде"
-    type: 'textarea',
-    placeholder: 'Ваш ответ...',
-  },
+  
+
 ];
