@@ -42,6 +42,12 @@ export default function Invitation() {
   const [confirmMessage, setConfirmMessage] = useState('');
   const [slowLoad, setSlowLoad] = useState(false);
 
+  async function sleep(ms: number): Promise<void> {
+    return new Promise(
+        (resolve)
+            => setTimeout(resolve, ms));
+}
+
   const loadGuest = () => {
     const c = (code ?? '').trim();
     if (!c) {
@@ -51,29 +57,31 @@ export default function Invitation() {
     }
     setLoading(true);
     setError(false);
-    setSlowLoad(false);
-    const slowTimer = setTimeout(() => setSlowLoad(true), 5000);
-    let cancelled = false;
-    fetchGuestByCode(c)
-      .then((data) => {
-        if (cancelled) return;
-        if (data) {
-          setGuestName(data.name);
-          setConfirmed(data.confirmed);
-        } else {
-          setError(true);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setError(true);
-      })
-      .finally(() => {
-        if (!cancelled) {
-          clearTimeout(slowTimer);
-          setLoading(false);
-        }
-      });
-    return () => { cancelled = true; };
+
+    let success = false;
+    let index = 0;
+
+    while (!success && index < 10) {
+      if (index === 1) setSlowLoad(true);
+      if (index !== 0) sleep(5000);
+
+      fetchGuestByCode(c)
+        .then((data) => {
+          if (data) {
+            setSlowLoad(false);
+            success = true;
+            setGuestName(data.name);
+            setConfirmed(data.confirmed);
+          } else {
+            setError(true);
+          }
+        });
+        
+      index ++;
+    }
+
+    setLoading(false);
+    if (!success) setError(true);
   };
 
   useEffect(() => {
