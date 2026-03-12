@@ -95,11 +95,11 @@ export default function Invitation() {
     return (
       <div className="guest-loading">
         <p>Загрузка...</p>
-        {slowLoad && (
+        {/* {slowLoad && (
           <p style={{ marginTop: '0.75rem', fontSize: '0.9rem', opacity: 0.9 }}>
-            Дольше обычного — таблица может отвечать с задержкой. Подождите или обновите страницу.
+            Дольше обычного — google таблица может отвечать с задержкой. Подождите или обновите страницу.
           </p>
-        )}
+        )} */}
       </div>
     );
   }
