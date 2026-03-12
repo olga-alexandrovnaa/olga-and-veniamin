@@ -107,8 +107,8 @@ export default function Invitation() {
   if (error || !guestName) {
     return (
       <div className="guest-error">
-        <h2>Приглашение не найдено</h2>
-        <p>Проверьте ссылку или обратитесь к организаторам.</p>
+        {/* <h2>Приглашение не найдено</h2> */}
+        <p>Пожалуйста, попробуйте позднее.</p>
         <p style={{ marginTop: '1rem' }}>
           <button type="button" className="btn btn--light" onClick={loadGuest}>
             Повторить попытку
