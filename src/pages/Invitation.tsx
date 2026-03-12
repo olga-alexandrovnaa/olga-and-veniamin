@@ -47,7 +47,7 @@ export default function Invitation() {
         (resolve) => setTimeout(resolve, ms));
 }
 
-  const loadGuest = () => {
+  const loadGuest = async () => {
     const c = (code ?? '').trim();
     if (!c) {
       setError(true);
@@ -62,17 +62,20 @@ export default function Invitation() {
 
     while (!success && index < 10) {
       // if (index === 1) setSlowLoad(true);
-      if (index !== 0) sleep(5000);
+      if (index !== 0) await sleep(5000);
 
-      fetchGuestByCode(c)
+      console.log('fetchGuestByCode');
+      await fetchGuestByCode(c)
         .then((data) => {
           if (data) {
             // setSlowLoad(false);
             success = true;
             setGuestName(data.name);
             setConfirmed(data.confirmed);
+            console.log(data.name);
           } else {
             setError(true);
+            console.log('err');
           }
         });
         
@@ -80,6 +83,7 @@ export default function Invitation() {
     }
 
     setLoading(false);
+    console.log(`success ${success}`);
     if (!success) setError(true);
   };
 
