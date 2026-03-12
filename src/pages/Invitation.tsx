@@ -40,12 +40,11 @@ export default function Invitation() {
   const [confirmed, setConfirmed] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState('');
-  const [slowLoad, setSlowLoad] = useState(false);
+  // const [slowLoad, setSlowLoad] = useState(false);
 
   async function sleep(ms: number): Promise<void> {
     return new Promise(
-        (resolve)
-            => setTimeout(resolve, ms));
+        (resolve) => setTimeout(resolve, ms));
 }
 
   const loadGuest = () => {
@@ -62,13 +61,13 @@ export default function Invitation() {
     let index = 0;
 
     while (!success && index < 10) {
-      if (index === 1) setSlowLoad(true);
+      // if (index === 1) setSlowLoad(true);
       if (index !== 0) sleep(5000);
 
       fetchGuestByCode(c)
         .then((data) => {
           if (data) {
-            setSlowLoad(false);
+            // setSlowLoad(false);
             success = true;
             setGuestName(data.name);
             setConfirmed(data.confirmed);
