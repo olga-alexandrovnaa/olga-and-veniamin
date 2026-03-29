@@ -102,32 +102,32 @@ export default function Invitation() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="guest-loading">
-        <p>Загрузка...</p>
-        {/* {slowLoad && (
-          <p style={{ marginTop: '0.75rem', fontSize: '0.9rem', opacity: 0.9 }}>
-            Дольше обычного — google таблица может отвечать с задержкой. Подождите или обновите страницу.
-          </p>
-        )} */}
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="guest-loading">
+  //       <p>Загрузка...</p>
+  //       {/* {slowLoad && (
+  //         <p style={{ marginTop: '0.75rem', fontSize: '0.9rem', opacity: 0.9 }}>
+  //           Дольше обычного — google таблица может отвечать с задержкой. Подождите или обновите страницу.
+  //         </p>
+  //       )} */}
+  //     </div>
+  //   );
+  // }
 
-  if (error || !guestName) {
-    return (
-      <div className="guest-error">
-        {/* <h2>Приглашение не найдено</h2> */}
-        <p>Пожалуйста, попробуйте позднее.</p>
-        <p style={{ marginTop: '1rem' }}>
-          <button type="button" className="btn btn--light" onClick={loadGuest}>
-            Повторить попытку
-          </button>
-        </p>
-      </div>
-    );
-  }
+  // if (error || !guestName) {
+  //   return (
+  //     <div className="guest-error">
+  //       {/* <h2>Приглашение не найдено</h2> */}
+  //       <p>Пожалуйста, попробуйте позднее.</p>
+  //       <p style={{ marginTop: '1rem' }}>
+  //         <button type="button" className="btn btn--light" onClick={loadGuest}>
+  //           Повторить попытку
+  //         </button>
+  //       </p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
@@ -160,8 +160,10 @@ export default function Invitation() {
       {/* Глава 2: дата, время, место, тайминг */}
       <section className="section chapter-light" aria-label="Детали">
         <div className="section__inner">
-          <h2 className="margin font-script">{guestName.split(' ').length > 1 ? 'Дорогие гости,' : 'Дорогой гость,'}</h2>
-          <h2 className="font-script">{guestName},</h2>
+          <h2 className="margin font-script">
+            {guestName && guestName.split(' ').length > 1 ? 'Дорогие гости,' : 'Дорогой гость,'}
+          </h2>
+          {guestName && <h2 className="font-script">{guestName},</h2>}
 
           <p>
             Счастьем делиться хочется с самыми близкими!
