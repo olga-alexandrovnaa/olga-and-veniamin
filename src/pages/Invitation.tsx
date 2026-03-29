@@ -35,8 +35,8 @@ const INVITATION = {
 export default function Invitation() {
   const { code } = useParams<{ code: string }>();
   const [guestName, setGuestName] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState('');
@@ -49,13 +49,13 @@ export default function Invitation() {
 
   const loadGuest = async () => {
     const c = (code ?? '').trim();
-    if (!c) {
-      setError(true);
-      setLoading(false);
-      return;
-    }
-    setLoading(true);
-    setError(false);
+    // if (!c) {
+    //   setError(true);
+    //   setLoading(false);
+    //   return;
+    // }
+    // setLoading(true);
+    // setError(false);
 
     let success = false;
     let index = 0;
@@ -74,17 +74,17 @@ export default function Invitation() {
             setConfirmed(data.confirmed);
             console.log(data.name);
           } else {
-            setError(true);
-            console.log('err');
+            // setError(true);
+            // console.log('err');
           }
         });
         
       index ++;
     }
 
-    setLoading(false);
+    // setLoading(false);
     console.log(`success ${success}`);
-    if (!success) setError(true);
+    // if (!success) setError(true);
   };
 
   useEffect(() => {
